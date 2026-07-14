@@ -1,0 +1,8 @@
+# ignore pycache
+__pycache__
+
+# ignore mypy cache
+.__mypy_cache
+
+# ignore tools
+ex1/data_generator.py

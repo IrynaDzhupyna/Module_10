@@ -1,5 +1,5 @@
 def artifact_sorter(artifacts: list[dict]) -> list[dict]:
-    return sorted(artifacts, key=lambda a: a["power"], reverse=True) 
+    return sorted(artifacts, key=lambda a: a["power"], reverse=True)
 
 
 def power_filter(mages: list[dict], min_power: int) -> list[dict]:
@@ -24,7 +24,7 @@ def mage_stats(mages: list[dict]) -> dict:
 
 def main() -> None:
 
-    print("Testing artifact sorter...")
+    print("\nTesting artifact sorter...")
     artifacts = [
         {"name": "Fire Staff", "power": 92, "type": "staff"},
         {"name": "Crystal Orb", "power": 85, "type": "orb"},
@@ -32,8 +32,8 @@ def main() -> None:
     ]
     sorted_artifacts = artifact_sorter(artifacts)
     print(
-        f"{sorted_artifacts[0]['name']} ({sorted_artifacts[0]['power']} power) "
-        f"comes before {sorted_artifacts[1]['name']} "
+        f"{sorted_artifacts[0]['name']} ({sorted_artifacts[0]['power']} power)"
+        f" comes before {sorted_artifacts[1]['name']} "
         f"({sorted_artifacts[1]['power']} power)"
     )
 
