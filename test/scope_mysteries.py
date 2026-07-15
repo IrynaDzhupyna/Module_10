@@ -4,7 +4,8 @@ from typing import Any
 
 def mage_counter() -> Callable:
     counter = 0
-    def call_counter():
+
+    def call_counter() -> int:
         nonlocal counter
         counter += 1
         return counter
@@ -13,14 +14,16 @@ def mage_counter() -> Callable:
 
 def spell_accumulator(initial_power: int) -> Callable:
     power = initial_power
-    def power_accumulator() -> int:
+
+    def power_accumulator(amount: int) -> int:
         nonlocal power
-        power = power + 5
+        power = power + amount
         return power
     return power_accumulator
 
 
 def enchantment_factory(enchantment_type: str) -> Callable:
+
     def enchant(item_name: str) -> str:
         return f"{enchantment_type} {item_name}"
     return enchant
@@ -33,12 +36,11 @@ def memory_vault() -> dict[str, Callable]:
         vault[key] = value
         return key, value
 
-    def recall(key: str) -> Any|str:
+    def recall(key: str) -> Any:
         if key not in vault:
             return "Memory not found"
         return vault[key]
     return {"store": store, "recall": recall}
-
 
 
 def main() -> None:
@@ -52,11 +54,10 @@ def main() -> None:
     print(f"counter_b call 1: {counter_b()}")
 
     print("\nTesting spell accumulator...")
-    initial_power = 1
+    initial_power = 100
     new_power = spell_accumulator(initial_power)
-    print(f"Initial power: {initial_power}")
-    for i in range(1, 4):
-        print(f"New power: {new_power()}")
+    print(f"Base {initial_power}, add 20: {new_power(20)}")
+    print(f"Base {initial_power}, add 30: {new_power(30)}")
 
     print("\nTesting enchantment factory...")
     flaming = enchantment_factory("Flaming")
