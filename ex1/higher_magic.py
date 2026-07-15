@@ -23,28 +23,42 @@ def power_amplifier(base_spell: Callable, multiplier: int) -> Callable:
 
 
 def conditional_caster(condition: Callable, spell: Callable) -> Callable:
-    pass
+    def cast_spell(target: str, power: int) -> str:
+        if condition(target, power):
+            return spell(target, power)
+        return "Spell fizzled"
+    return cast_spell
 
 
 def spell_sequence(spells: list[Callable]) -> Callable:
-    pass
+    def sequence(target: str, power: int) -> list[str]:
+        return [spell(target, power) for spell in spells]
+    return sequence
 
 
 def main() -> None:
-
-    print("\nTesting spell combiner")
-
+    print("Testing spell combiner...")
     combined = spell_combiner(fireball, heal)
-    print(f"Combined spell result: {combined("Dragon", 10)}")
+    result = combined("Dragon", 10)
+    print(f"Combined spell result: {', '.join(result)}")
 
-    print("\nTesting power_amplifier")
-    mega_fireball = power_amplifier(fireball, 3)
-    print(f"Original: {fireball("Dragon", 10)}, "
-          f"\nAmplified: {mega_fireball("Dragon", 10)}")
+    print("\nTesting power amplifier...")
+    original = fireball("Dragon", 10)
+    amplified = power_amplifier(fireball, 3)("Dragon", 10)
+    print(f"Original: {original}")
+    print(f"Amplified: {amplified}")
 
-    # test_values = [6, 8, 15]
-    # test_targets = ['Dragon', 'Goblin', 'Wizard', 'Knight']
+    print("\nTesting conditional caster...")
+    strong_spell = conditional_caster(lambda t, p: p > 5, fireball)
+    weak_spell = conditional_caster(lambda t, p: p > 5, fireball)
+    print(f'Success case: {strong_spell("Dragon", 10)}')
+    print(f'Fizzle case: {weak_spell("Dragon", 3)}')
 
+    print("\nTesting spell sequence...")
+    sequence = spell_sequence([fireball, heal, fireball])
+    results = sequence("Dragon", 10)
+    for line in results:
+        print(line)
 
 
 if __name__ == "__main__":
